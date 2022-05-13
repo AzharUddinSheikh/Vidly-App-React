@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { getMovies } from '../services/fakeMovieService';
+import Likes from './likes';
 
 
 class Movies extends Component {
@@ -8,8 +9,17 @@ class Movies extends Component {
         movies : getMovies(),
     }
 
-    handleDelete = (movie : any) => {
-        const movies = this.state.movies.filter(m => m != movie);
+    handleDelete = (movie : any) : void => {
+        const movies = this.state.movies.filter(m => m !== movie);
+        this.setState({movies});
+    }
+
+
+    handleLike = (movie : any) : void => {
+        const movies = [...this.state.movies];
+        let index = movies.indexOf(movie);
+        movies[index] = {...movies[index]};
+        movies[index].like = !movies[index].like;
         this.setState({movies});
     }
 
@@ -29,6 +39,7 @@ class Movies extends Component {
                             <th scope="col">Stock</th>
                             <th scope="col">Rate</th>
                             <th scope='col'></th>
+                            <th scope='col'></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -37,6 +48,7 @@ class Movies extends Component {
                             <td>{movie.genre.name}</td>
                             <td>{movie.numberInStock}</td>
                             <td>{movie.dailyRentalRate}</td>
+                            <td><Likes onClick={() => this.handleLike(movie)} liked={movie.like}/></td>
                             <td><button onClick={() => this.handleDelete(movie)} className='btn btn-danger'>Delete</button></td>
                         </tr>) )}
                     </tbody>
