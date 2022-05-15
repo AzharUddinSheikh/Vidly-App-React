@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import _ from 'lodash';
 
 interface PaginationProps {
@@ -22,18 +23,29 @@ class Pagination extends React.Component<PaginationProps, PaginationState> {
         return (
                 <nav aria-label="Page navigation example">
                     <ul className="pagination">
-                        {pages.map(page => <li 
-                                                key={page} 
-                                                className={(page === currentPage) ? "page-item active":"page-item"}>
-                                                <a 
-                                                    onClick={() => onPageChange(page)} 
-                                                    className='page-link'>{page}
-                                                </a>
-                                            </li>)}
+                        {pages.map(page => 
+                                        <li 
+                                            key={page} 
+                                            className={(page === currentPage) ? "page-item active":"page-item"}>
+                                            <a 
+                                                onClick={() => onPageChange(page)} 
+                                                className='page-link'>{page}
+                                            </a>
+                                        </li>)}
                     </ul>
                 </nav>
         );
     }
 }
  
+/*
+if you are not using typescript we have interface for this 
+Pagination.propTypes = {
+    pageSize : PropTypes.number.isRequired,
+    itemCount : PropTypes.number.isRequired,
+    currentPage : PropTypes.number.isRequired,
+    onPageChage : PropTypes.func.isRequired
+}
+*/
+
 export default Pagination;
