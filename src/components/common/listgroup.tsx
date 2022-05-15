@@ -3,9 +3,10 @@ import React, { Component } from 'react';
 
 interface ListGroupProps {
     items : any,
-    onItemSelect : () =>  void,
+    onItemSelect : (item: any) =>  void,
     valueProperty : any,
     textProperty : any,
+    selectedItem : any,
 }
 
 
@@ -16,13 +17,15 @@ class ListGroup extends Component<ListGroupProps> {
     };
 
     render() { 
-        const {items, textProperty, valueProperty} = this.props;
+        const {items, textProperty, valueProperty, selectedItem, onItemSelect} = this.props;
+
         return ( 
             <ul className="list-group">
                 {items.map((item: { [x: string]: string | number; }) => 
                                         <li 
+                                            onClick={() => onItemSelect(item)}
                                             key={item[valueProperty]} 
-                                            className='list-group-item'
+                                            className={(selectedItem === item)?"list-group-item active":"list-group-item"}
                                             style={{cursor:'pointer'}}>
                                             {item[textProperty]}
                                         </li>)}
