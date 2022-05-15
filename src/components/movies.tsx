@@ -7,19 +7,6 @@ import {paginate} from '../utils/paginate';
 import ListGroup from './common/listgroup';
 
 
-interface movie {
-        _id: string;
-        title: string;
-        genre: {
-            _id: string;
-            name: string;
-        };
-        numberInStock: number;
-        dailyRentalRate: number;
-        publishDate: string;
-        like: boolean;
-}
-
 class Movies extends Component {
 
     state = {
@@ -27,11 +14,12 @@ class Movies extends Component {
         pageSize : 4,
         currentPage : 1,
         genres : [],
-        selectedGenre : "",
     }
 
     componentDidMount () {
-        this.setState({movies : getMovies(), genres: getGenres()})
+
+        const genres = [{'name':'All Genre'}, ...getGenres()];
+        this.setState({movies : getMovies(), genres})
     }
 
     handleDelete = (movie : any) : void => {
@@ -40,7 +28,7 @@ class Movies extends Component {
     }
 
 
-    handleLike = (movie) : void => {
+    handleLike = (movie : any) : void => {
         const movies = [...this.state.movies];
         let index = movies.indexOf(movie);
         movies[index] = {...movies[index]};
@@ -53,7 +41,8 @@ class Movies extends Component {
     }
 
     handleSelect = (genre: any) => {
-        this.setState({selectedGenre : genre})
+        // setting current page to 1 
+        this.setState({selectedGenre : genre, currentPage:1})
     }
 
     render() : JSX.Element { 
@@ -62,7 +51,7 @@ class Movies extends Component {
             return <p>No movies in the database</p>;
         }
 
-        const filtered = selectedGenre 
+        const filtered = selectedGenre && selectedGenre._id
                             ? allMovies.filter(m => m.genre._id === selectedGenre._id) 
                             : allMovies;
 
