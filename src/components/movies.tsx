@@ -27,7 +27,7 @@ class Movies extends Component {
         pageSize : 4,
         currentPage : 1,
         genres : [],
-        selectedGenre : "all",
+        selectedGenre : "",
     }
 
     componentDidMount () {
@@ -40,7 +40,7 @@ class Movies extends Component {
     }
 
 
-    handleLike = (movie : movie) : void => {
+    handleLike = (movie) : void => {
         const movies = [...this.state.movies];
         let index = movies.indexOf(movie);
         movies[index] = {...movies[index]};
@@ -62,7 +62,11 @@ class Movies extends Component {
             return <p>No movies in the database</p>;
         }
 
-        const movies = paginate(allMovies, currentPage, pageSize);
+        const filtered = selectedGenre 
+                            ? allMovies.filter(m => m.genre._id === selectedGenre._id) 
+                            : allMovies;
+
+        const movies = paginate(filtered, currentPage, pageSize);
 
         return ( 
             <React.Fragment>
@@ -75,7 +79,7 @@ class Movies extends Component {
                             />
                     </div>
                     <div className="col">
-                        <p>showing {movies.length} movies in the database</p>
+                        <p>showing {filtered.length} movies in the database</p>
                         <table className="table">
                             <thead>
                                 <tr>
@@ -99,7 +103,7 @@ class Movies extends Component {
                             </tbody>
                         </table>
                         <Pagination 
-                            itemCount={allMovies.length} 
+                            itemCount={filtered.length} 
                             pageSize={pageSize} 
                             onPageChange={this.handlePageChange}
                             currentPage={currentPage}/>
