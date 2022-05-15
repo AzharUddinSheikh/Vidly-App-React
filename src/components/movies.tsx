@@ -8,12 +8,14 @@ import MovieTable from './movieTable';
 import _ from 'lodash';
 
 
+interface sortColumn {path:string, order : boolean | "asc" | "desc"};
+
 interface MovieState {
     movies : any,
     pageSize : number,
     currentPage : number,
     genres : any,
-    sortColumn : {path:String, order:boolean|"asc"|"desc"},
+    sortColumn : {path:string, order:boolean|"asc"|"desc"},
     selectedGenre? : any 
 }
 
@@ -56,14 +58,7 @@ class Movies extends Component {
         this.setState({selectedGenre : genre, currentPage:1})
     }
 
-    handleSort = (path : String) => {
-        const sortColumn = {...this.state.sortColumn};
-        if (sortColumn.path === path) {
-            sortColumn.order = (sortColumn.order === "asc" ? "desc" : "asc")
-        } else {
-            sortColumn.path = path;
-            sortColumn.order = "asc";
-        }
+    handleSort = (sortColumn : sortColumn) => {
        this.setState({sortColumn})
     }
 
@@ -97,7 +92,8 @@ class Movies extends Component {
                             movies={movies} 
                             onDelete={this.handleDelete} 
                             onLike={this.handleLike}
-                            onSort={this.handleSort}/>  
+                            onSort={this.handleSort}
+                            sortColumn={sortColumn}/>  
                         <Pagination 
                             itemCount={filtered.length} 
                             pageSize={pageSize} 
