@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { getMovies } from '../services/fakeMovieService';
+import Pagination from './common/pagination';
 import Likes from './likes';
 
 
@@ -7,6 +8,7 @@ class Movies extends Component {
 
     state = {
         movies : getMovies(),
+        pageSize : 4,
     }
 
     handleDelete = (movie : any) : void => {
@@ -23,8 +25,12 @@ class Movies extends Component {
         this.setState({movies});
     }
 
+    handlePageChange = () : void => {
+        console.log("page Changed");
+    }
+
     render() : JSX.Element { 
-        let {movies} = this.state;
+        let {movies, pageSize} = this.state;
         if (movies.length === 0) {
             return <p>No movies in the database</p>;
         }
@@ -53,6 +59,7 @@ class Movies extends Component {
                         </tr>) )}
                     </tbody>
                 </table>
+                <Pagination itemCount={movies.length} pageSize={pageSize} onPageChange={() => this.handlePageChange}/>
             </React.Fragment>
         );
     }
