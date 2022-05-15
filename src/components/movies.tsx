@@ -9,6 +9,7 @@ class Movies extends Component {
     state = {
         movies : getMovies(),
         pageSize : 4,
+        currentPage : 1,
     }
 
     handleDelete = (movie : any) : void => {
@@ -25,12 +26,12 @@ class Movies extends Component {
         this.setState({movies});
     }
 
-    handlePageChange = () : void => {
-        console.log("page Changed");
+    handlePageChange = (page:number) : void => {
+        this.setState({currentPage:page})
     }
 
     render() : JSX.Element { 
-        let {movies, pageSize} = this.state;
+        let {movies, pageSize, currentPage} = this.state;
         if (movies.length === 0) {
             return <p>No movies in the database</p>;
         }
@@ -59,7 +60,11 @@ class Movies extends Component {
                         </tr>) )}
                     </tbody>
                 </table>
-                <Pagination itemCount={movies.length} pageSize={pageSize} onPageChange={() => this.handlePageChange}/>
+                <Pagination 
+                    itemCount={movies.length} 
+                    pageSize={pageSize} 
+                    onPageChange={this.handlePageChange}
+                    currentPage={currentPage}/>
             </React.Fragment>
         );
     }
