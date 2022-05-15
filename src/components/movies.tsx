@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { getMovies } from '../services/fakeMovieService';
 import {getGenres} from '../services/fakeGenreService';
 import Pagination from './common/pagination';
-import Likes from './likes';
 import {paginate} from '../utils/paginate';
 import ListGroup from './common/listgroup';
+import MovieTable from './movieTable';
 
 
 class Movies extends Component {
@@ -69,28 +69,7 @@ class Movies extends Component {
                     </div>
                     <div className="col">
                         <p>showing {filtered.length} movies in the database</p>
-                        <table className="table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Title</th>
-                                    <th scope="col">Genre</th>
-                                    <th scope="col">Stock</th>
-                                    <th scope="col">Rate</th>
-                                    <th scope='col'></th>
-                                    <th scope='col'></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                { movies.map( movie => (<tr key={movie._id}>
-                                    <td>{movie.title}</td>
-                                    <td>{movie.genre.name}</td>
-                                    <td>{movie.numberInStock}</td>
-                                    <td>{movie.dailyRentalRate}</td>
-                                    <td><Likes onClick={() => this.handleLike(movie)} liked={movie.like}/></td>
-                                    <td><button onClick={() => this.handleDelete(movie)} className='btn btn-danger'>Delete</button></td>
-                                </tr>) )}
-                            </tbody>
-                        </table>
+                        <MovieTable movies={movies} onDelete={this.handleDelete} onLike={this.handleLike}/>  
                         <Pagination 
                             itemCount={filtered.length} 
                             pageSize={pageSize} 
