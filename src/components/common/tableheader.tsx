@@ -6,10 +6,8 @@ interface TableHeaderProps {
     onSort : (sortColumn : {path: string, order : boolean | "asc" | "desc"}) => void,
 }
  
-interface TableHeaderState {
-}
- 
-class TableHeader extends React.Component<TableHeaderProps, TableHeaderState> {
+
+class TableHeader extends React.Component<TableHeaderProps> {
     
     raiseSort = (path : string | undefined) => {
         const sortColumn = {...this.props.sortColumn};
@@ -21,15 +19,22 @@ class TableHeader extends React.Component<TableHeaderProps, TableHeaderState> {
             sortColumn.order = "asc";
         }
         this.props.onSort(sortColumn);
-   }
+    }
+
+    renderSortIcon = (column : any) => {
+        
+        if (column.path !== this.props.sortColumn.path) return null;
+        if (this.props.sortColumn.order === "asc" ) return <i className="fa fa-sort-asc"></i>;
+        return <i className="fa fa-sort-desc"></i>;
+    }
 
     render() { 
         return (
             <thead>
                 <tr>
-                    {this.props.columns.map(column => <th key={column.path || column.key}
+                    {this.props.columns.map(column => <th className='clickable' key={column.path || column.key}
                                                     onClick={()=>this.raiseSort(column.path)}>
-                                                    {column.label}</th>)}
+                                                    {column.label}{this.renderSortIcon(column)}</th>)}
                 </tr>
             </thead>
         );

@@ -20,7 +20,7 @@ class TableBody extends React.Component<TableBodyProps, TableBodyState> {
 
     createKey = (item : any, column: any) => {
         return item._id + (column.path || column.key);
-    }   
+    }
 
     render() { 
         const {data, columns} = this.props;
