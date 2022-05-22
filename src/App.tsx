@@ -6,6 +6,7 @@ import { Route, Redirect, Switch } from "react-router-dom";
 import Rental from './components/rental';
 import Customer from './components/customer';
 import NotFound from './components/common/notfound';
+import MovieDetail from './components/moviedetails';
 
 
 
@@ -15,6 +16,7 @@ function App() {
       <NavBar />
       <main className="container">
       <Switch>
+          <Route path="/movies/:id" component={MovieDetail} />
           <Route path="/movies" component={Movies}/>
           <Route path="/rental" component={Rental}/>
           <Route path="/customer" component={Customer}/>

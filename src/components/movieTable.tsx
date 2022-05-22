@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import Table from './common/table';
 import Likes from './likes';
 
@@ -31,12 +32,22 @@ interface MovieTableProps {
 class MovieTable extends Component<MovieTableProps> {
 
      columns = [
-          {path:'title', label:'Title'},
+          {
+               path:'title', 
+               label:'Title', 
+               content: (movie : any)=><Link to={`/movies/${movie._id}`}>{movie.title}</Link>
+          },
           {path:'genre.name', label:'Genre'},
           {path:'numberInStock', label:'Stock'},
           {path:'dailyRentalRate', label:'Rate'},
-          {key : 'like', content : (movie:any) => <Likes onClick={() => this.props.onLike(movie)} liked={movie.like}/>},
-          {key : 'delete', content : (movie:any) => <button onClick={() => this.props.onDelete(movie)} className='btn btn-danger'>Delete</button>}
+          {
+               key : 'like', 
+               content : (movie:any) => <Likes onClick={() => this.props.onLike(movie)} liked={movie.like}/>
+          },
+          {
+               key : 'delete', 
+               content : (movie:any) => <button onClick={() => this.props.onDelete(movie)} className='btn btn-danger'>Delete</button>
+          }
      ]
 
      render() { 
