@@ -13,9 +13,6 @@ class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
     }
 
     username = React.createRef<HTMLInputElement>();
-    // componentDidMount() {
-    //     this.username.current?.focus();
-    // }
 
     handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -23,11 +20,12 @@ class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
 
     handleChange = (e : React.ChangeEvent<HTMLInputElement>) => {
         const account = {...this.state.account};
-        account.username = e.currentTarget.value;
+        account[e.currentTarget.name] = e.currentTarget.value;
         this.setState({account});
     }
 
     render() {
+        const {account} = this.state;
         return (
             <div>
                 <h1>Login</h1>
@@ -36,7 +34,8 @@ class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
                         <label htmlFor="username">Username</label>
                         <input 
                             autoFocus
-                            value={this.state.account.username}
+                            name='username'
+                            value={account.username}
                             onChange={this.handleChange}
                             ref={this.username} 
                             id="username" 
@@ -45,7 +44,13 @@ class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
                     </div>
                     <div className="form-group">
                         <label htmlFor="password">Password</label>
-                        <input id='password' type="text" className="form-control" />
+                        <input
+                            onChange={this.handleChange}
+                            name='password'
+                            value={account.password}
+                            id='password' 
+                            type="text" 
+                            className="form-control" />
                     </div>
                     <button className="btn btn-primary">Login</button>
                 </form>
