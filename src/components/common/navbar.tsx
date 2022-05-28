@@ -23,6 +23,9 @@ class NavBar extends React.Component<NavBarProps, NavBarState> {
                     <li className="nav-item">
                         <NavLink className="nav-item nav-link" to="/customer">Customer</NavLink>
                     </li>
+                    <li className="nav-item">
+                        <NavLink className="nav-item nav-link" to="/login">Login</NavLink>
+                    </li>
                 </ul>
             </nav>
         );
