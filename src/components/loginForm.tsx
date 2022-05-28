@@ -7,14 +7,24 @@ interface LoginFormState {
 }
 
 class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
-    username = React.createRef<HTMLInputElement>();
 
+    state = {
+        account : {username : '', password : ''}
+    }
+
+    username = React.createRef<HTMLInputElement>();
     // componentDidMount() {
     //     this.username.current?.focus();
     // }
 
     handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+    }
+
+    handleChange = (e : React.ChangeEvent<HTMLInputElement>) => {
+        const account = {...this.state.account};
+        account.username = e.currentTarget.value;
+        this.setState({account});
     }
 
     render() {
@@ -24,7 +34,14 @@ class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
                 <form onSubmit={this.handleSubmit}>
                     <div className="form-group">
                         <label htmlFor="username">Username</label>
-                        <input autoFocus ref={this.username} id="username" type="text" className="form-control" />
+                        <input 
+                            autoFocus
+                            value={this.state.account.username}
+                            onChange={this.handleChange}
+                            ref={this.username} 
+                            id="username" 
+                            type="text" 
+                            className="form-control" />
                     </div>
                     <div className="form-group">
                         <label htmlFor="password">Password</label>
