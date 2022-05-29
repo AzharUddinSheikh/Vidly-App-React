@@ -7,9 +7,14 @@ interface Account {
     password? : string,
 }
 
+interface LoginFormState {
+    account : Account,
+    errors : Account
+}
+
 class LoginForm extends React.Component {
 
-    state = {
+    state : LoginFormState = {
         account : {username : '', password : ''},
         errors : {},
     }
@@ -19,20 +24,21 @@ class LoginForm extends React.Component {
     validate = () => {
         const errors : Account = {};
         const {account} = this.state;
-        
-        if (account.username.trim() === '') 
+
+        if (account.username?.trim() === '') 
             errors.username = 'Username is required.';
-        if (account.password.trim() === '')
+        if (account.password?.trim() === '')
             errors.password = 'Password is required.';
         
-            return Object.keys(errors).length === 0 ? null : errors;
+        return Object.keys(errors).length === 0 ? null : errors;
     }
 
     handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
+        // errors may be null but we cannot set null while calling setState
         const errors = this.validate();
-        this.setState({errors});
+        this.setState({errors : errors || {}});
         
         if (errors) return;
         console.log("submitted");
@@ -45,7 +51,7 @@ class LoginForm extends React.Component {
     }
 
     render() {
-        const {account} = this.state;
+        const {account, errors} = this.state;
         return (
             <div>
                 <h1>Login</h1>
@@ -55,6 +61,7 @@ class LoginForm extends React.Component {
                         name="username"
                         label="Username"
                         type="text"
+                        error={errors.username}
                         onChange={this.handleChange}
                     />
                      <Input
@@ -63,6 +70,7 @@ class LoginForm extends React.Component {
                         name="password"
                         type="password"
                         label="Password"
+                        error={errors.password}
                     />
                     <button className="btn btn-primary">Login</button>
                 </form>

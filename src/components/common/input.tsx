@@ -1,16 +1,17 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 interface InputProps {
     name: string,
     label: string,
     value: string | number | readonly string[] | undefined,
     type : React.HTMLInputTypeAttribute | undefined,
+    error : ReactNode,
     onChange : (e :  React.ChangeEvent<HTMLInputElement>) => void,
 }
  
 class Input extends React.Component<InputProps> {
     render() {
-        const {name, label, value, type, onChange} = this.props;
+        const {name, label, value, type, error, onChange} = this.props;
         
         return (
         <div className="form-group">
@@ -23,6 +24,8 @@ class Input extends React.Component<InputProps> {
                 name={name} 
                 type={type} 
                 className="form-control" />
+            {/* if error is truthy element will be displayed */}
+            {error && <div className="alert alert-danger">{error}</div>}
         </div>);
     }
 }
