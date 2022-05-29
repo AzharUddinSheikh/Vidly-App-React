@@ -1,4 +1,5 @@
 import React from 'react';
+import Input from './common/input';
 
 interface LoginFormProps {
 }
@@ -35,28 +36,20 @@ class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
             <div>
                 <h1>Login</h1>
                 <form onSubmit={this.handleSubmit}>
-                    <div className="form-group">
-                        <label htmlFor="username">Username</label>
-                        <input 
-                            autoFocus
-                            value={account.username}
-                            onChange={this.handleChange}
-                            ref={this.username} 
-                            id="username"
-                            name='username' 
-                            type="text" 
-                            className="form-control" />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="password">Password</label>
-                        <input 
-                            value={account.password}
-                            onChange={this.handleChange}
-                            name='password'
-                            id='password' 
-                            type="text" 
-                            className="form-control" />
-                    </div>
+                    <Input
+                        value={account.username}
+                        name="username"
+                        label="Username"
+                        type="text"
+                        onChange={this.handleChange}
+                    />
+                     <Input
+                        value={account.password}
+                        onChange={this.handleChange}
+                        name="password"
+                        type="password"
+                        label="Password"
+                    />
                     <button className="btn btn-primary">Login</button>
                 </form>
             </div>
