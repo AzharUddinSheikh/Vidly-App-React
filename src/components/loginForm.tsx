@@ -44,10 +44,27 @@ class LoginForm extends React.Component {
         console.log("submitted");
     }
 
+    validateProperty = ({name, value} : HTMLInputElement) => {
+        if (name === 'username') {
+            if (value.trim() === '') return 'Username is required';
+        }
+        if (name === 'password') {
+            if (value.trim() === '') return 'Password is required';
+        }
+    }
+
     handleChange = (e : React.ChangeEvent<HTMLInputElement>) => {
+
+        const errors = {...this.state.errors};
+        const errorMessage = this.validateProperty(e.currentTarget);
+        
+        if (errorMessage) errors[e.currentTarget.name as keyof Account] = errorMessage;
+        else delete errors[e.currentTarget.name as keyof Account];
+
         const account = {...this.state.account};
         account[e.currentTarget.name as keyof Account] = e.currentTarget.value;
-        this.setState({account});
+        
+        this.setState({account, errors});
     }
 
     render() {
