@@ -64,7 +64,7 @@ class Movies extends Component {
 
     getPageData = () => {
 
-        let {movies : allMovies, pageSize, currentPage, selectedGenre, genres, sortColumn} = this.state;
+        let {movies : allMovies, pageSize, currentPage, selectedGenre, sortColumn} = this.state;
 
         const filtered = selectedGenre && selectedGenre._id
         ? allMovies.filter((m: { genre: { _id: any; }; }) => m.genre._id === selectedGenre._id) 
