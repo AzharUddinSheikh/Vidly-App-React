@@ -1,9 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 interface LoginFormProps {
 }
 
 interface LoginFormState {
+}
+
+interface Account {
+    username: string,
+    password : string,
 }
 
 class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
@@ -20,7 +25,7 @@ class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
 
     handleChange = (e : React.ChangeEvent<HTMLInputElement>) => {
         const account = {...this.state.account};
-        account[e.currentTarget.name] = e.currentTarget.value;
+        account[e.currentTarget.name as keyof Account] = e.currentTarget.value;
         this.setState({account});
     }
 
@@ -34,20 +39,20 @@ class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
                         <label htmlFor="username">Username</label>
                         <input 
                             autoFocus
-                            name='username'
                             value={account.username}
                             onChange={this.handleChange}
                             ref={this.username} 
-                            id="username" 
+                            id="username"
+                            name='username' 
                             type="text" 
                             className="form-control" />
                     </div>
                     <div className="form-group">
                         <label htmlFor="password">Password</label>
-                        <input
+                        <input 
+                            value={account.password}
                             onChange={this.handleChange}
                             name='password'
-                            value={account.password}
                             id='password' 
                             type="text" 
                             className="form-control" />
