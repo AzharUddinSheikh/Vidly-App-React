@@ -26,7 +26,8 @@ class LoginForm extends React.Component {
     }
 
     validate = () => {
-        const {error} = Joi.validate(this.state.account, this.schema, {abortEarly:false});
+        let options = {abortEarly:false}
+        const {error} = Joi.validate(this.state.account, this.schema, options);
         if (!error) return null;
 
         const errors : Account = {};
@@ -47,12 +48,10 @@ class LoginForm extends React.Component {
     }
 
     validateProperty = ({name, value} : HTMLInputElement) => {
-        if (name === 'username') {
-            if (value.trim() === '') return 'Username is required';
-        }
-        if (name === 'password') {
-            if (value.trim() === '') return 'Password is required';
-        }
+        const obj = { [name] : value };
+        const schema = { [name] : this.schema[name as keyof Account] }
+        const { error } = Joi.validate(obj, schema);
+        return (error) ? error.details[0].message : null;
     }
 
     handleChange = (e : React.ChangeEvent<HTMLInputElement>) => {
