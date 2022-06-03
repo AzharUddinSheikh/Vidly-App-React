@@ -11,18 +11,15 @@ interface InputProps {
  
 class Input extends React.Component<InputProps> {
     render() {
-        const {name, label, value, type, error, onChange} = this.props;
+        const {name, label, error, ...rest} = this.props;
         
         return (
         <div className="form-group">
             <label htmlFor={name}>{label}</label>
             <input 
-                autoFocus
-                value={value}
-                onChange={onChange}
+                {...rest}
+                name={name}
                 id={name}
-                name={name} 
-                type={type} 
                 className="form-control" />
             {/* if error is truthy element will be displayed */}
             {error && <div className="alert alert-danger">{error}</div>}
